@@ -4,7 +4,7 @@
 #
 Name     : libcanberra
 Version  : 0.30
-Release  : 1
+Release  : 2
 URL      : http://0pointer.de/lennart/projects/libcanberra/libcanberra-0.30.tar.xz
 Source0  : http://0pointer.de/lennart/projects/libcanberra/libcanberra-0.30.tar.xz
 Summary  : Event Sound API
@@ -103,6 +103,7 @@ lib components for the libcanberra package.
 
 %build
 export LANG=C
+export SOURCE_DATE_EPOCH=1483226380
 %configure --disable-static
 make V=1  %{?_smp_mflags}
 
@@ -143,8 +144,12 @@ rm -rf %{buildroot}
 %files dev
 %defattr(-,root,root,-)
 /usr/include/*.h
-/usr/lib64/*.so
-/usr/lib64/pkgconfig/*.pc
+/usr/lib64/libcanberra-gtk.so
+/usr/lib64/libcanberra-gtk3.so
+/usr/lib64/libcanberra.so
+/usr/lib64/pkgconfig/libcanberra-gtk.pc
+/usr/lib64/pkgconfig/libcanberra-gtk3.pc
+/usr/lib64/pkgconfig/libcanberra.pc
 
 %files doc
 %defattr(-,root,root,-)
@@ -163,7 +168,6 @@ rm -rf %{buildroot}
 
 %files lib
 %defattr(-,root,root,-)
-/usr/lib64/*.so.*
 /usr/lib64/gtk-2.0/modules/libcanberra-gtk-module.so
 /usr/lib64/gtk-3.0/modules/libcanberra-gtk-module.so
 /usr/lib64/gtk-3.0/modules/libcanberra-gtk3-module.so
@@ -173,3 +177,9 @@ rm -rf %{buildroot}
 /usr/lib64/libcanberra-0.30/libcanberra-null.so
 /usr/lib64/libcanberra-0.30/libcanberra-oss.so
 /usr/lib64/libcanberra-0.30/libcanberra-pulse.so
+/usr/lib64/libcanberra-gtk.so.0
+/usr/lib64/libcanberra-gtk.so.0.1.9
+/usr/lib64/libcanberra-gtk3.so.0
+/usr/lib64/libcanberra-gtk3.so.0.1.9
+/usr/lib64/libcanberra.so.0
+/usr/lib64/libcanberra.so.0.2.5
