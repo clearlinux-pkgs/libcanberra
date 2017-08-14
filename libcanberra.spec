@@ -4,7 +4,7 @@
 #
 Name     : libcanberra
 Version  : 0.30
-Release  : 5
+Release  : 6
 URL      : http://0pointer.de/lennart/projects/libcanberra/libcanberra-0.30.tar.xz
 Source0  : http://0pointer.de/lennart/projects/libcanberra/libcanberra-0.30.tar.xz
 Summary  : Event Sound API
@@ -33,6 +33,8 @@ BuildRequires : libxslt-bin
 BuildRequires : pango-dev32
 BuildRequires : pkgconfig(32alsa)
 BuildRequires : pkgconfig(32atk)
+BuildRequires : pkgconfig(32gdk-2.0)
+BuildRequires : pkgconfig(32gdk-3.0)
 BuildRequires : pkgconfig(32glib-2.0)
 BuildRequires : pkgconfig(32gstreamer-1.0)
 BuildRequires : pkgconfig(32gthread-2.0)
@@ -44,6 +46,8 @@ BuildRequires : pkgconfig(32vorbisfile)
 BuildRequires : pkgconfig(32x11)
 BuildRequires : pkgconfig(alsa)
 BuildRequires : pkgconfig(atk)
+BuildRequires : pkgconfig(gdk-2.0)
+BuildRequires : pkgconfig(gdk-3.0)
 BuildRequires : pkgconfig(glib-2.0)
 BuildRequires : pkgconfig(gstreamer-1.0)
 BuildRequires : pkgconfig(gthread-2.0)
@@ -53,6 +57,8 @@ BuildRequires : pkgconfig(libpulse)
 BuildRequires : pkgconfig(libudev)
 BuildRequires : pkgconfig(vorbisfile)
 BuildRequires : pkgconfig(x11)
+BuildRequires : six
+BuildRequires : six-python
 
 %description
 libcanberra 0.30
@@ -152,8 +158,11 @@ cp -a libcanberra-0.30 build32
 popd
 
 %build
+export http_proxy=http://127.0.0.1:9/
+export https_proxy=http://127.0.0.1:9/
+export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1483306647
+export SOURCE_DATE_EPOCH=1502728994
 %configure --disable-static
 make V=1  %{?_smp_mflags}
 
@@ -169,10 +178,11 @@ popd
 export LANG=C
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
-export no_proxy=localhost
+export no_proxy=localhost,127.0.0.1,0.0.0.0
 make VERBOSE=1 V=1 %{?_smp_mflags} check
 
 %install
+export SOURCE_DATE_EPOCH=1502728994
 rm -rf %{buildroot}
 pushd ../build32/
 %make_install32
