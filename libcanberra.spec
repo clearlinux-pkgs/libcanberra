@@ -4,7 +4,7 @@
 #
 Name     : libcanberra
 Version  : 0.30
-Release  : 6
+Release  : 7
 URL      : http://0pointer.de/lennart/projects/libcanberra/libcanberra-0.30.tar.xz
 Source0  : http://0pointer.de/lennart/projects/libcanberra/libcanberra-0.30.tar.xz
 Summary  : Event Sound API
@@ -57,8 +57,6 @@ BuildRequires : pkgconfig(libpulse)
 BuildRequires : pkgconfig(libudev)
 BuildRequires : pkgconfig(vorbisfile)
 BuildRequires : pkgconfig(x11)
-BuildRequires : six
-BuildRequires : six-python
 
 %description
 libcanberra 0.30
@@ -135,7 +133,6 @@ doc components for the libcanberra package.
 Summary: lib components for the libcanberra package.
 Group: Libraries
 Requires: libcanberra-data
-Requires: libcanberra-config
 
 %description lib
 lib components for the libcanberra package.
@@ -145,7 +142,6 @@ lib components for the libcanberra package.
 Summary: lib32 components for the libcanberra package.
 Group: Default
 Requires: libcanberra-data
-Requires: libcanberra-config
 
 %description lib32
 lib32 components for the libcanberra package.
@@ -162,7 +158,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1502728994
+export SOURCE_DATE_EPOCH=1510697931
 %configure --disable-static
 make V=1  %{?_smp_mflags}
 
@@ -182,7 +178,7 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 make VERBOSE=1 V=1 %{?_smp_mflags} check
 
 %install
-export SOURCE_DATE_EPOCH=1502728994
+export SOURCE_DATE_EPOCH=1510697931
 rm -rf %{buildroot}
 pushd ../build32/
 %make_install32
