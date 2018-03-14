@@ -4,7 +4,7 @@
 #
 Name     : libcanberra
 Version  : 0.30
-Release  : 9
+Release  : 10
 URL      : http://0pointer.de/lennart/projects/libcanberra/libcanberra-0.30.tar.xz
 Source0  : http://0pointer.de/lennart/projects/libcanberra/libcanberra-0.30.tar.xz
 Summary  : Event Sound API
@@ -158,17 +158,17 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1510779875
-%configure --disable-static
-make V=1  %{?_smp_mflags}
+export SOURCE_DATE_EPOCH=1521063862
+%configure --disable-static --disable-oss
+make  %{?_smp_mflags}
 
 pushd ../build32/
 export PKG_CONFIG_PATH="/usr/lib32/pkgconfig"
 export CFLAGS="$CFLAGS -m32"
 export CXXFLAGS="$CXXFLAGS -m32"
 export LDFLAGS="$LDFLAGS -m32"
-%configure --disable-static    --libdir=/usr/lib32 --build=i686-generic-linux-gnu --host=i686-generic-linux-gnu --target=i686-clr-linux-gnu
-make V=1  %{?_smp_mflags}
+%configure --disable-static --disable-oss --disable-oss  --libdir=/usr/lib32 --build=i686-generic-linux-gnu --host=i686-generic-linux-gnu --target=i686-clr-linux-gnu
+make  %{?_smp_mflags}
 popd
 %check
 export LANG=C
@@ -178,7 +178,7 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 make VERBOSE=1 V=1 %{?_smp_mflags} check
 
 %install
-export SOURCE_DATE_EPOCH=1510779875
+export SOURCE_DATE_EPOCH=1521063862
 rm -rf %{buildroot}
 pushd ../build32/
 %make_install32
@@ -261,7 +261,6 @@ popd
 /usr/lib64/libcanberra-0.30/libcanberra-gstreamer.so
 /usr/lib64/libcanberra-0.30/libcanberra-multi.so
 /usr/lib64/libcanberra-0.30/libcanberra-null.so
-/usr/lib64/libcanberra-0.30/libcanberra-oss.so
 /usr/lib64/libcanberra-0.30/libcanberra-pulse.so
 /usr/lib64/libcanberra-gtk.so.0
 /usr/lib64/libcanberra-gtk.so.0.1.9
@@ -279,7 +278,6 @@ popd
 /usr/lib32/libcanberra-0.30/libcanberra-gstreamer.so
 /usr/lib32/libcanberra-0.30/libcanberra-multi.so
 /usr/lib32/libcanberra-0.30/libcanberra-null.so
-/usr/lib32/libcanberra-0.30/libcanberra-oss.so
 /usr/lib32/libcanberra-0.30/libcanberra-pulse.so
 /usr/lib32/libcanberra-gtk.so.0
 /usr/lib32/libcanberra-gtk.so.0.1.9

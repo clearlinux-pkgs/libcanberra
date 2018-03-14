@@ -1,24 +1,7 @@
 Configure miss: pthread_yield
-Configure miss: soundcard.h usability
-Configure miss: soundcard.h presence
-Configure miss: soundcard.h
-Configure miss: machine/soundcard.h usability
-Configure miss: machine/soundcard.h presence
-Configure miss: machine/soundcard.h
 Configure miss: TDB
 Configure miss: lynx
-Configure miss: i686-generic-linux-gnu-objdump
-Configure miss: i686-generic-linux-gnu-dlltool
-Configure miss: i686-generic-linux-gnu-strip
-Configure miss: i686-generic-linux-gnu-mt
 Configure miss: whether a statically linked program can dlopen itself
 Configure miss: pthread_yield
-Configure miss: i686-generic-linux-gnu-pkg-config
-Configure miss: soundcard.h usability
-Configure miss: soundcard.h presence
-Configure miss: soundcard.h
-Configure miss: machine/soundcard.h usability
-Configure miss: machine/soundcard.h presence
-Configure miss: machine/soundcard.h
 Configure miss: TDB
 Configure miss: lynx
