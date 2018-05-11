@@ -7,3 +7,5 @@ cairo-dev32
 gdk-pixbuf-dev32
 freetype-dev32
 fontconfig-dev32
+fribidi-dev
+fribidi-dev32
