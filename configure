@@ -1,1 +1,1 @@
---disable-oss
+--disable-oss --disable-alsa --disable-gstreamer --disable-tdb

@@ -4,17 +4,15 @@
 #
 Name     : libcanberra
 Version  : 0.30
-Release  : 13
+Release  : 14
 URL      : http://0pointer.de/lennart/projects/libcanberra/libcanberra-0.30.tar.xz
 Source0  : http://0pointer.de/lennart/projects/libcanberra/libcanberra-0.30.tar.xz
-Summary  : Event Sound API
+Summary  : A small and lightweight implementation of the XDG Sound Theme Specification
 Group    : Development/Tools
 License  : LGPL-2.1
-Requires: libcanberra-bin
-Requires: libcanberra-config
-Requires: libcanberra-lib
-Requires: libcanberra-doc
-Requires: libcanberra-data
+Requires: libcanberra-bin = %{version}-%{release}
+Requires: libcanberra-data = %{version}-%{release}
+Requires: libcanberra-lib = %{version}-%{release}
 BuildRequires : cairo-dev32
 BuildRequires : docbook-xml
 BuildRequires : fontconfig-dev32
@@ -33,6 +31,7 @@ BuildRequires : libtool-dev
 BuildRequires : libtool-dev32
 BuildRequires : libxslt-bin
 BuildRequires : pango-dev32
+BuildRequires : pkg-config
 BuildRequires : pkgconfig(32alsa)
 BuildRequires : pkgconfig(32atk)
 BuildRequires : pkgconfig(32gdk-2.0)
@@ -76,19 +75,10 @@ libcanberra 0.30
 %package bin
 Summary: bin components for the libcanberra package.
 Group: Binaries
-Requires: libcanberra-data
-Requires: libcanberra-config
+Requires: libcanberra-data = %{version}-%{release}
 
 %description bin
 bin components for the libcanberra package.
-
-
-%package config
-Summary: config components for the libcanberra package.
-Group: Default
-
-%description config
-config components for the libcanberra package.
 
 
 %package data
@@ -102,10 +92,10 @@ data components for the libcanberra package.
 %package dev
 Summary: dev components for the libcanberra package.
 Group: Development
-Requires: libcanberra-lib
-Requires: libcanberra-bin
-Requires: libcanberra-data
-Provides: libcanberra-devel
+Requires: libcanberra-lib = %{version}-%{release}
+Requires: libcanberra-bin = %{version}-%{release}
+Requires: libcanberra-data = %{version}-%{release}
+Provides: libcanberra-devel = %{version}-%{release}
 
 %description dev
 dev components for the libcanberra package.
@@ -114,10 +104,10 @@ dev components for the libcanberra package.
 %package dev32
 Summary: dev32 components for the libcanberra package.
 Group: Default
-Requires: libcanberra-lib32
-Requires: libcanberra-bin
-Requires: libcanberra-data
-Requires: libcanberra-dev
+Requires: libcanberra-lib32 = %{version}-%{release}
+Requires: libcanberra-bin = %{version}-%{release}
+Requires: libcanberra-data = %{version}-%{release}
+Requires: libcanberra-dev = %{version}-%{release}
 
 %description dev32
 dev32 components for the libcanberra package.
@@ -134,7 +124,7 @@ doc components for the libcanberra package.
 %package lib
 Summary: lib components for the libcanberra package.
 Group: Libraries
-Requires: libcanberra-data
+Requires: libcanberra-data = %{version}-%{release}
 
 %description lib
 lib components for the libcanberra package.
@@ -143,7 +133,7 @@ lib components for the libcanberra package.
 %package lib32
 Summary: lib32 components for the libcanberra package.
 Group: Default
-Requires: libcanberra-data
+Requires: libcanberra-data = %{version}-%{release}
 
 %description lib32
 lib32 components for the libcanberra package.
@@ -160,16 +150,17 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1526006760
-%configure --disable-static --disable-oss
+export SOURCE_DATE_EPOCH=1547829376
+%configure --disable-static --disable-oss --disable-alsa --disable-gstreamer --disable-tdb
 make  %{?_smp_mflags}
 
 pushd ../build32/
 export PKG_CONFIG_PATH="/usr/lib32/pkgconfig"
+export ASFLAGS="$ASFLAGS --32"
 export CFLAGS="$CFLAGS -m32"
 export CXXFLAGS="$CXXFLAGS -m32"
 export LDFLAGS="$LDFLAGS -m32"
-%configure --disable-static --disable-oss --disable-oss  --libdir=/usr/lib32 --build=i686-generic-linux-gnu --host=i686-generic-linux-gnu --target=i686-clr-linux-gnu
+%configure --disable-static --disable-oss --disable-alsa --disable-gstreamer --disable-tdb --disable-oss  --libdir=/usr/lib32 --build=i686-generic-linux-gnu --host=i686-generic-linux-gnu --target=i686-clr-linux-gnu
 make  %{?_smp_mflags}
 popd
 %check
@@ -178,9 +169,11 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 make VERBOSE=1 V=1 %{?_smp_mflags} check
+cd ../build32;
+make VERBOSE=1 V=1 %{?_smp_mflags} check || :
 
 %install
-export SOURCE_DATE_EPOCH=1526006760
+export SOURCE_DATE_EPOCH=1547829376
 rm -rf %{buildroot}
 pushd ../build32/
 %make_install32
@@ -200,14 +193,7 @@ popd
 
 %files bin
 %defattr(-,root,root,-)
-/usr/bin/canberra-boot
 /usr/bin/canberra-gtk-play
-
-%files config
-%defattr(-,root,root,-)
-/usr/lib/systemd/system/canberra-system-bootup.service
-/usr/lib/systemd/system/canberra-system-shutdown-reboot.service
-/usr/lib/systemd/system/canberra-system-shutdown.service
 
 %files data
 %defattr(-,root,root,-)
@@ -240,7 +226,7 @@ popd
 /usr/lib32/pkgconfig/libcanberra.pc
 
 %files doc
-%defattr(-,root,root,-)
+%defattr(0644,root,root,0755)
 %doc /usr/share/doc/libcanberra/*
 /usr/share/gtk-doc/html/libcanberra/ch01.html
 /usr/share/gtk-doc/html/libcanberra/home.png
@@ -259,8 +245,6 @@ popd
 /usr/lib64/gtk-2.0/modules/libcanberra-gtk-module.so
 /usr/lib64/gtk-3.0/modules/libcanberra-gtk-module.so
 /usr/lib64/gtk-3.0/modules/libcanberra-gtk3-module.so
-/usr/lib64/libcanberra-0.30/libcanberra-alsa.so
-/usr/lib64/libcanberra-0.30/libcanberra-gstreamer.so
 /usr/lib64/libcanberra-0.30/libcanberra-multi.so
 /usr/lib64/libcanberra-0.30/libcanberra-null.so
 /usr/lib64/libcanberra-0.30/libcanberra-pulse.so
@@ -276,8 +260,6 @@ popd
 /usr/lib32/gtk-2.0/modules/libcanberra-gtk-module.so
 /usr/lib32/gtk-3.0/modules/libcanberra-gtk-module.so
 /usr/lib32/gtk-3.0/modules/libcanberra-gtk3-module.so
-/usr/lib32/libcanberra-0.30/libcanberra-alsa.so
-/usr/lib32/libcanberra-0.30/libcanberra-gstreamer.so
 /usr/lib32/libcanberra-0.30/libcanberra-multi.so
 /usr/lib32/libcanberra-0.30/libcanberra-null.so
 /usr/lib32/libcanberra-0.30/libcanberra-pulse.so
