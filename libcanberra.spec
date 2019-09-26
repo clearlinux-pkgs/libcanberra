@@ -4,10 +4,10 @@
 #
 Name     : libcanberra
 Version  : 0.30
-Release  : 14
+Release  : 15
 URL      : http://0pointer.de/lennart/projects/libcanberra/libcanberra-0.30.tar.xz
 Source0  : http://0pointer.de/lennart/projects/libcanberra/libcanberra-0.30.tar.xz
-Summary  : A small and lightweight implementation of the XDG Sound Theme Specification
+Summary  : Event Sound API
 Group    : Development/Tools
 License  : LGPL-2.1
 Requires: libcanberra-bin = %{version}-%{release}
@@ -96,6 +96,7 @@ Requires: libcanberra-lib = %{version}-%{release}
 Requires: libcanberra-bin = %{version}-%{release}
 Requires: libcanberra-data = %{version}-%{release}
 Provides: libcanberra-devel = %{version}-%{release}
+Requires: libcanberra = %{version}-%{release}
 
 %description dev
 dev components for the libcanberra package.
@@ -149,22 +150,27 @@ popd
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
-export LANG=C
-export SOURCE_DATE_EPOCH=1547829376
+export LANG=C.UTF-8
+export SOURCE_DATE_EPOCH=1569525468
+export GCC_IGNORE_WERROR=1
+export CFLAGS="$CFLAGS -fno-lto "
+export FCFLAGS="$CFLAGS -fno-lto "
+export FFLAGS="$CFLAGS -fno-lto "
+export CXXFLAGS="$CXXFLAGS -fno-lto "
 %configure --disable-static --disable-oss --disable-alsa --disable-gstreamer --disable-tdb
 make  %{?_smp_mflags}
 
 pushd ../build32/
 export PKG_CONFIG_PATH="/usr/lib32/pkgconfig"
-export ASFLAGS="$ASFLAGS --32"
-export CFLAGS="$CFLAGS -m32"
-export CXXFLAGS="$CXXFLAGS -m32"
-export LDFLAGS="$LDFLAGS -m32"
+export ASFLAGS="${ASFLAGS}${ASFLAGS:+ }--32"
+export CFLAGS="${CFLAGS}${CFLAGS:+ }-m32 -mstackrealign"
+export CXXFLAGS="${CXXFLAGS}${CXXFLAGS:+ }-m32 -mstackrealign"
+export LDFLAGS="${LDFLAGS}${LDFLAGS:+ }-m32 -mstackrealign"
 %configure --disable-static --disable-oss --disable-alsa --disable-gstreamer --disable-tdb --disable-oss  --libdir=/usr/lib32 --build=i686-generic-linux-gnu --host=i686-generic-linux-gnu --target=i686-clr-linux-gnu
 make  %{?_smp_mflags}
 popd
 %check
-export LANG=C
+export LANG=C.UTF-8
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
@@ -173,7 +179,7 @@ cd ../build32;
 make VERBOSE=1 V=1 %{?_smp_mflags} check || :
 
 %install
-export SOURCE_DATE_EPOCH=1547829376
+export SOURCE_DATE_EPOCH=1569525468
 rm -rf %{buildroot}
 pushd ../build32/
 %make_install32
@@ -205,7 +211,8 @@ popd
 
 %files dev
 %defattr(-,root,root,-)
-/usr/include/*.h
+/usr/include/canberra-gtk.h
+/usr/include/canberra.h
 /usr/lib64/libcanberra-gtk.so
 /usr/lib64/libcanberra-gtk3.so
 /usr/lib64/libcanberra.so
