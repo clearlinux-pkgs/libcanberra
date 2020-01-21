@@ -4,7 +4,7 @@
 #
 Name     : libcanberra
 Version  : 0.30
-Release  : 15
+Release  : 16
 URL      : http://0pointer.de/lennart/projects/libcanberra/libcanberra-0.30.tar.xz
 Source0  : http://0pointer.de/lennart/projects/libcanberra/libcanberra-0.30.tar.xz
 Summary  : Event Sound API
@@ -41,6 +41,7 @@ BuildRequires : pkgconfig(32gstreamer-1.0)
 BuildRequires : pkgconfig(32gthread-2.0)
 BuildRequires : pkgconfig(32gtk+-2.0)
 BuildRequires : pkgconfig(32gtk+-3.0)
+BuildRequires : pkgconfig(32harfbuzz)
 BuildRequires : pkgconfig(32libpulse)
 BuildRequires : pkgconfig(32libudev)
 BuildRequires : pkgconfig(32vorbisfile)
@@ -54,6 +55,7 @@ BuildRequires : pkgconfig(gstreamer-1.0)
 BuildRequires : pkgconfig(gthread-2.0)
 BuildRequires : pkgconfig(gtk+-2.0)
 BuildRequires : pkgconfig(gtk+-3.0)
+BuildRequires : pkgconfig(harfbuzz)
 BuildRequires : pkgconfig(libpulse)
 BuildRequires : pkgconfig(libudev)
 BuildRequires : pkgconfig(vorbisfile)
@@ -142,6 +144,7 @@ lib32 components for the libcanberra package.
 
 %prep
 %setup -q -n libcanberra-0.30
+cd %{_builddir}/libcanberra-0.30
 pushd ..
 cp -a libcanberra-0.30 build32
 popd
@@ -151,7 +154,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1569525468
+export SOURCE_DATE_EPOCH=1579639230
 export GCC_IGNORE_WERROR=1
 export CFLAGS="$CFLAGS -fno-lto "
 export FCFLAGS="$CFLAGS -fno-lto "
@@ -179,7 +182,7 @@ cd ../build32;
 make VERBOSE=1 V=1 %{?_smp_mflags} check || :
 
 %install
-export SOURCE_DATE_EPOCH=1569525468
+export SOURCE_DATE_EPOCH=1579639230
 rm -rf %{buildroot}
 pushd ../build32/
 %make_install32
