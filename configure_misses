@@ -1,5 +1,2 @@
 Configure miss: pthread_yield
 Configure miss: lynx
-Configure miss: whether a statically linked program can dlopen itself
-Configure miss: pthread_yield
-Configure miss: lynx

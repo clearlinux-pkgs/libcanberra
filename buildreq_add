@@ -1,11 +1,4 @@
 # This file contains additional build requirements that did not get
 # picked up automatically. One name per line, no whitespace.
 libtool-dev
-libtool-dev32
-pango-dev32
-cairo-dev32
-gdk-pixbuf-dev32
-freetype-dev32
-fontconfig-dev32
 fribidi-dev
-fribidi-dev32
