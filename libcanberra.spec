@@ -4,7 +4,7 @@
 #
 Name     : libcanberra
 Version  : 0.30
-Release  : 18
+Release  : 19
 URL      : http://0pointer.de/lennart/projects/libcanberra/libcanberra-0.30.tar.xz
 Source0  : http://0pointer.de/lennart/projects/libcanberra/libcanberra-0.30.tar.xz
 Summary  : Event Sound API
@@ -20,9 +20,6 @@ BuildRequires : gtk-doc-dev
 BuildRequires : libtool-dev
 BuildRequires : libxslt-bin
 BuildRequires : pkg-config
-BuildRequires : pkgconfig(32atk)
-BuildRequires : pkgconfig(32harfbuzz)
-BuildRequires : pkgconfig(32x11)
 BuildRequires : pkgconfig(alsa)
 BuildRequires : pkgconfig(atk)
 BuildRequires : pkgconfig(gdk-2.0)
@@ -107,7 +104,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1600279823
+export SOURCE_DATE_EPOCH=1600302258
 export GCC_IGNORE_WERROR=1
 export CFLAGS="$CFLAGS -fno-lto "
 export FCFLAGS="$FFLAGS -fno-lto "
@@ -124,7 +121,7 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 make %{?_smp_mflags} check
 
 %install
-export SOURCE_DATE_EPOCH=1600279823
+export SOURCE_DATE_EPOCH=1600302258
 rm -rf %{buildroot}
 %make_install
 

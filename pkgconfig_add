@@ -1,8 +1,5 @@
 # This file contains additional pkgconfig build requirements that did
 # not get picked up automatically. One name per line, no whitespace.
 x11
-32x11
 atk
-32atk
 harfbuzz
-32harfbuzz
